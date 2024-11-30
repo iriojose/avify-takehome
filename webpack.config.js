@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const host = 'localhost';
 const port = 8080;
@@ -16,8 +17,9 @@ module.exports = {
     },
     output: {
         filename: '[name]-[contenthash:6].bundle.js',
-        path: path.join(__dirname, './build/www'),
-        publicPath: `http://${host}:${port}/`
+        path: path.join(__dirname, 'dist'),
+        publicPath: `http://${host}:${port}/`,
+        clean: true,
     },
     resolve: {
         mainFields: ['browser', 'module', 'main'],
@@ -51,7 +53,8 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name]-[contenthash:6].css',
             chunkFilename: '[id].css'
-        })
+        }),
+        new Dotenv(),
     ],
     devServer: {
         port,
